@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../features/home/presentation/home_screen.dart';
+import '../features/splash/presentation/splash_screen.dart';
 import 'theme/app_theme.dart';
 
 class OwnBreadApp extends StatelessWidget {
@@ -12,7 +12,7 @@ class OwnBreadApp extends StatelessWidget {
       title: 'Own Bread',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }

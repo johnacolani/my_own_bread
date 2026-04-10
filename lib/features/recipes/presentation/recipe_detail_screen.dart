@@ -100,7 +100,7 @@ class RecipeDetailScreen extends StatelessWidget {
                   ),
                   if (recipe.bakeMinutes > 0) ...[
                     const SizedBox(height: AppSpacing.lg),
-                    const Text('Oven timer', style: AppTypography.title),
+                    Text('Oven timer', style: AppTypography.title),
                     const SizedBox(height: AppSpacing.sm),
                     Center(
                       child: AnalogTimer(
@@ -112,7 +112,7 @@ class RecipeDetailScreen extends StatelessWidget {
                   ],
                   if (notes.isNotEmpty) ...[
                     const SizedBox(height: AppSpacing.lg),
-                    const Text('Notes', style: AppTypography.title),
+                    Text('Notes', style: AppTypography.title),
                     const SizedBox(height: AppSpacing.sm),
                     ...notes.map(
                       (line) => Padding(
@@ -122,7 +122,7 @@ class RecipeDetailScreen extends StatelessWidget {
                     ),
                   ],
                   const SizedBox(height: AppSpacing.lg),
-                  const Text('Ingredients', style: AppTypography.title),
+                  Text('Ingredients', style: AppTypography.title),
                   const SizedBox(height: AppSpacing.sm),
                   ...recipe.ingredients.map(
                     (item) => Padding(
@@ -131,7 +131,7 @@ class RecipeDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xl),
-                  const Text('Steps', style: AppTypography.title),
+                  Text('Steps', style: AppTypography.title),
                   const SizedBox(height: AppSpacing.sm),
                   for (var index = 0; index < recipe.steps.length; index++)
                     ListTile(

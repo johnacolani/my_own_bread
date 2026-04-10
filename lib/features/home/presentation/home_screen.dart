@@ -64,14 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _openCreateBread,
         icon: const Icon(Icons.add),
-        label: const Text('Add Your Bread'),
+        label: const Text('Add a loaf'),
       ),
       body: _recipes.isEmpty
           ? Center(
-              child: Text(
-                'No breads yet',
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.textSecondary,
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.xl),
+                child: Text(
+                  'Nothing rising here yet.\nTap below to add your first loaf.',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: AppColors.textSecondary,
+                    height: 1.6,
+                  ),
                 ),
               ),
             )
@@ -90,7 +95,16 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                 color: AppColors.surface,
                 borderRadius: BorderRadius.circular(AppRadius.lg),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(
+                  color: AppColors.gold.withValues(alpha: 0.4),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.gold.withValues(alpha: 0.12),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,7 +195,9 @@ class _InfoChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceMuted,
         borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(
+          color: AppColors.gold.withValues(alpha: 0.35),
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

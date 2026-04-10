@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 import 'app_radius.dart';
@@ -7,7 +8,10 @@ import 'app_typography.dart';
 
 class AppTheme {
   static ThemeData get lightTheme {
-    final base = ThemeData(useMaterial3: true);
+    final base = ThemeData(
+      useMaterial3: true,
+      splashFactory: InkSparkle.splashFactory,
+    );
 
     final colorScheme = ColorScheme.fromSeed(
       seedColor: AppColors.primary,
@@ -15,11 +19,11 @@ class AppTheme {
     ).copyWith(
       primary: AppColors.primary,
       onPrimary: Colors.white,
-      primaryContainer: AppColors.primary.withValues(alpha: 0.18),
+      primaryContainer: AppColors.primary.withValues(alpha: 0.2),
       onPrimaryContainer: AppColors.textPrimary,
       secondary: AppColors.coral,
       onSecondary: Colors.white,
-      secondaryContainer: AppColors.coral.withValues(alpha: 0.2),
+      secondaryContainer: AppColors.coral.withValues(alpha: 0.22),
       onSecondaryContainer: AppColors.textPrimary,
       surface: AppColors.surface,
       onSurface: AppColors.textPrimary,
@@ -28,7 +32,7 @@ class AppTheme {
       surfaceContainerHighest: AppColors.surfaceMuted,
     );
 
-    const textTheme = TextTheme(
+    final textTheme = TextTheme(
       headlineMedium: AppTypography.heading,
       titleLarge: AppTypography.title,
       titleMedium: AppTypography.section,
@@ -40,38 +44,46 @@ class AppTheme {
     return base.copyWith(
       scaffoldBackgroundColor: AppColors.background,
       colorScheme: colorScheme,
-      textTheme: textTheme,
+      textTheme: GoogleFonts.nunitoTextTheme(textTheme),
       dividerColor: AppColors.border,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         centerTitle: false,
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         scrolledUnderElevation: 0,
         titleTextStyle: AppTypography.title,
+        surfaceTintColor: Colors.transparent,
       ),
       cardTheme: CardThemeData(
         color: AppColors.surface,
         elevation: 0,
+        shadowColor: AppColors.gold.withValues(alpha: 0.18),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.lg),
-          side: const BorderSide(color: AppColors.border),
+          side: BorderSide(
+            color: AppColors.gold.withValues(alpha: 0.35),
+          ),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.surface,
+        fillColor: AppColors.surfaceMuted.withValues(alpha: 0.65),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.md,
           vertical: AppSpacing.md,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.form),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderSide: BorderSide(
+            color: AppColors.gold.withValues(alpha: 0.45),
+          ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.form),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderSide: BorderSide(
+            color: AppColors.gold.withValues(alpha: 0.4),
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.form),
@@ -82,36 +94,42 @@ class AppTheme {
         ),
         labelStyle: AppTypography.bodyMuted,
         hintStyle: AppTypography.bodyMuted.copyWith(
-          color: AppColors.textSecondary.withValues(alpha: 0.85),
+          color: AppColors.textSecondary.withValues(alpha: 0.75),
         ),
       ),
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.surfaceMuted,
-        selectedColor: AppColors.primary.withValues(alpha: 0.22),
+        selectedColor: AppColors.coral.withValues(alpha: 0.2),
         disabledColor: AppColors.surfaceMuted,
-        labelStyle: AppTypography.bodyMuted.copyWith(color: AppColors.textPrimary),
+        labelStyle:
+            AppTypography.bodyMuted.copyWith(color: AppColors.textPrimary),
         secondaryLabelStyle: AppTypography.label,
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.sm,
           vertical: AppSpacing.xs,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.lg),
-          side: const BorderSide(color: AppColors.border),
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+          side: BorderSide.none,
         ),
       ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: AppColors.coral,
         foregroundColor: Colors.white,
-        elevation: 2,
-        extendedPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+        elevation: 3,
+        highlightElevation: 6,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.lg),
+        ),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: AppColors.textPrimary,
-        contentTextStyle: const TextStyle(
+        backgroundColor: const Color(0xFF4A4540),
+        contentTextStyle: GoogleFonts.nunito(
           color: Colors.white,
           fontSize: 14,
-          height: 1.4,
+          fontWeight: FontWeight.w500,
+          height: 1.45,
         ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
@@ -123,7 +141,10 @@ class AppTheme {
           backgroundColor: AppColors.coral,
           foregroundColor: Colors.white,
           disabledBackgroundColor: AppColors.coral.withValues(alpha: 0.45),
+          elevation: 0,
+          shadowColor: Colors.transparent,
           minimumSize: const Size.fromHeight(52),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),
@@ -134,6 +155,7 @@ class AppTheme {
           backgroundColor: AppColors.coral,
           foregroundColor: Colors.white,
           minimumSize: const Size.fromHeight(52),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),
@@ -143,13 +165,16 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.textPrimary,
           minimumSize: const Size.fromHeight(52),
-          side: const BorderSide(color: AppColors.primary),
+          side: BorderSide(
+            color: AppColors.primary.withValues(alpha: 0.55),
+            width: 1.5,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),
         ),
       ),
-      listTileTheme: const ListTileThemeData(
+      listTileTheme: ListTileThemeData(
         iconColor: AppColors.primary,
         textColor: AppColors.textPrimary,
         titleTextStyle: AppTypography.body,
