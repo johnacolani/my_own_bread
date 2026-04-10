@@ -34,4 +34,12 @@ class AppTypography {
     fontWeight: FontWeight.w600,
     color: AppColors.textSecondary,
   );
+
+  /// Section headings in forms (e.g. "Basics", "Timing").
+  static const TextStyle section = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+    height: 1.35,
+  );
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/app_spacing.dart';
 
+/// Shell aligned with [AppTheme]: background and app bar from theme tokens.
 class OwnBreadScaffold extends StatelessWidget {
   const OwnBreadScaffold({
     super.key,
@@ -11,8 +12,6 @@ class OwnBreadScaffold extends StatelessWidget {
 
   final String title;
   final Widget child;
-  final Color backgroundColor = Colors.white;
-  final Icon icon = const Icon(Icons.add);
 
   @override
   Widget build(BuildContext context) {

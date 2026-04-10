@@ -1,0 +1,7 @@
+# Regenerate native splash: dart run flutter_native_splash:create
+flutter_native_splash:
+  color: "#F5F2EB"
+  image: assets/images/french-bread.jpg
+  android_12:
+    color: "#F5F2EB"
+    image: assets/images/french-bread.jpg

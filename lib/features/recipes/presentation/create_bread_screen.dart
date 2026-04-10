@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/theme/app_radius.dart';
+import '../../../app/theme/app_spacing.dart';
 import '../../../shared/models/bread_recipe.dart';
 
 class CreateBreadScreen extends StatefulWidget {
@@ -147,10 +149,10 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
         child: Form(
           key: _formKey,
           child: ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppSpacing.lg),
             children: [
               Text('Basics', style: theme.textTheme.titleMedium),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               _AppField(
                 controller: _titleController,
                 label: 'Bread name',
@@ -162,7 +164,7 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _AppField(
                 controller: _descriptionController,
                 label: 'Description',
@@ -175,7 +177,7 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _OutlinedDropdown<BreadType>(
                 label: 'Bread type',
                 value: _breadType,
@@ -191,9 +193,9 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                   if (v != null) setState(() => _breadType = v);
                 },
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
               Text('Yield & size', style: theme.textTheme.titleMedium),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Row(
                 children: [
                   Expanded(
@@ -213,7 +215,7 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: _OutlinedDropdown<LoafSize>(
                       label: 'Loaf size',
@@ -233,9 +235,9 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
               Text('Timing', style: theme.textTheme.titleMedium),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Row(
                 children: [
                   Expanded(
@@ -251,7 +253,7 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: _AppField(
                       controller: _totalMinutesController,
@@ -269,7 +271,7 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               Row(
                 children: [
                   Expanded(
@@ -281,7 +283,7 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                       validator: _optionalMinutesValidator,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: _AppField(
                       controller: _secondProofController,
@@ -293,7 +295,7 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               Row(
                 children: [
                   Expanded(
@@ -311,7 +313,7 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: _AppField(
                       controller: _bakeTemperatureController,
@@ -327,7 +329,7 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: _OutlinedDropdown<TemperatureUnit>(
                       label: 'Unit',
@@ -347,9 +349,9 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
               Text('Ingredients & steps', style: theme.textTheme.titleMedium),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               _AppField(
                 controller: _ingredientsController,
                 label: 'Ingredients',
@@ -362,7 +364,7 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _AppField(
                 controller: _stepsController,
                 label: 'Steps',
@@ -378,44 +380,44 @@ class _CreateBreadScreenState extends State<CreateBreadScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
               Text('Optional notes', style: theme.textTheme.titleMedium),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               _AppField(
                 controller: _hydrationController,
                 label: 'Hydration note',
                 hint: 'e.g. ~70% hydration',
                 maxLines: 2,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _AppField(
                 controller: _flourTypeController,
                 label: 'Flour type',
                 hint: 'e.g. strong bread flour',
                 maxLines: 2,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _AppField(
                 controller: _specialInstructionController,
                 label: 'Special instruction',
                 hint: '',
                 maxLines: 3,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _AppField(
                 controller: _steamNoteController,
                 label: 'Steam / Dutch oven',
                 hint: 'e.g. steam first 20 min',
                 maxLines: 2,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _AppField(
                 controller: _imageUrlController,
                 label: 'Image URL (optional)',
                 hint: 'https://…',
                 keyboardType: TextInputType.url,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
               FilledButton.icon(
                 onPressed: _saveBread,
                 icon: const Icon(Icons.check),
@@ -444,23 +446,21 @@ class _OutlinedDropdown<T extends Object> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InputDecorator(
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
-        contentPadding: const EdgeInsetsDirectional.only(
-          start: 12,
-          end: 8,
-          top: 4,
-          bottom: 4,
-        ),
+    final deco = InputDecoration(
+      labelText: label,
+      contentPadding: const EdgeInsetsDirectional.only(
+        start: AppSpacing.md,
+        end: AppSpacing.sm,
+        top: AppSpacing.xs,
+        bottom: AppSpacing.xs,
       ),
+    ).applyDefaults(Theme.of(context).inputDecorationTheme);
+    return InputDecorator(
+      decoration: deco,
       child: DropdownButtonHideUnderline(
         child: DropdownButton<T>(
           isExpanded: true,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(AppRadius.form),
           value: value,
           items: items,
           onChanged: onChanged,
@@ -498,9 +498,6 @@ class _AppField extends StatelessWidget {
         labelText: label,
         hintText: hint,
         alignLabelWithHint: maxLines > 1,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
       ),
     );
   }

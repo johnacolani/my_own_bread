@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/app_spacing.dart';
-import '../../../app/theme/app_typography.dart';
 import '../../../core/widgets/own_bread_scaffold.dart';
 import '../../home/presentation/home_screen.dart';
 
@@ -12,16 +11,18 @@ class CompletionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return OwnBreadScaffold(
       title: 'Bake Complete',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Nice work.', style: AppTypography.heading),
+          Text('Nice work.', style: textTheme.headlineMedium),
           const SizedBox(height: AppSpacing.md),
           Text(
             'You completed $recipeName. This is where history, notes, and ratings can be added next.',
-            style: AppTypography.body,
+            style: textTheme.bodyLarge,
           ),
           const Spacer(),
           ElevatedButton(

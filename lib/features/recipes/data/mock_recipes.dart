@@ -23,7 +23,7 @@ final List<BreadRecipe> mockBreadRecipes = [
     ],
     steps: [
       RecipeStep(name: 'Mix flour and water', minutes: 10),
-      RecipeStep(name: 'Autolyse'),
+      RecipeStep(name: 'Rest for autolyse', minutes: 30),
       RecipeStep(name: 'Add starter and salt', minutes: 15),
       RecipeStep(name: 'Stretch and fold', minutes: 30),
       RecipeStep(name: 'Bulk ferment', minutes: 240),

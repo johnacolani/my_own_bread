@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/app_radius.dart';
 import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_typography.dart';
+import '../../../core/constants/recipe_step_images.dart';
+import '../../../core/widgets/analog_timer.dart';
 import '../../../core/widgets/own_bread_scaffold.dart';
+import '../../../core/widgets/recipe_step_photo.dart';
 import '../../../shared/models/bread_recipe.dart';
 import '../../baking_session/presentation/baking_session_screen.dart';
+
+Widget _stepListLeading(String stepName, int stepNumber) {
+  final path = assetForStepName(stepName);
+  if (path != null) {
+    return RecipeStepPhotoThumb(assetPath: path);
+  }
+  return CircleAvatar(
+    radius: 16,
+    child: Text('$stepNumber'),
+  );
+}
 
 class RecipeDetailScreen extends StatelessWidget {
   const RecipeDetailScreen({super.key, required this.recipe});
@@ -24,82 +40,123 @@ class RecipeDetailScreen extends StatelessWidget {
     return OwnBreadScaffold(
       title: recipe.title,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _RecipeLeadImage(recipe: recipe),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(recipe.breadType.label, style: AppTypography.label),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(recipe.description, style: AppTypography.body),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
-            children: [
-              Chip(label: Text('${recipe.loafCount.label} · ${recipe.loafSize.label}')),
-              Chip(label: Text('${recipe.totalMinutes} min total')),
-              Chip(label: Text(recipe.difficulty)),
-              if (recipe.firstProofMinutes != null)
-                Chip(label: Text('1st proof ${recipe.firstProofMinutes} min')),
-              if (recipe.secondProofMinutes != null)
-                Chip(label: Text('2nd proof ${recipe.secondProofMinutes} min')),
-              Chip(label: Text('Bake ${recipe.bakeMinutes} min @ ${recipe.bakeTemperatureLabel}')),
-            ],
-          ),
-          if (notes.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.lg),
-            const Text('Notes', style: AppTypography.title),
-            const SizedBox(height: AppSpacing.sm),
-            ...notes.map(
-              (line) => Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                child: Text(line, style: AppTypography.bodyMuted),
-              ),
-            ),
-          ],
-          const SizedBox(height: AppSpacing.lg),
-          const Text('Ingredients', style: AppTypography.title),
-          const SizedBox(height: AppSpacing.sm),
-          ...recipe.ingredients.map(
-            (item) => Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-              child: Text('• $item', style: AppTypography.bodyMuted),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          const Text('Steps', style: AppTypography.title),
-          const SizedBox(height: AppSpacing.sm),
           Expanded(
-            child: ListView.builder(
-              itemCount: recipe.steps.length,
-              itemBuilder: (context, index) {
-                final step = recipe.steps[index];
-                return ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: CircleAvatar(
-                    radius: 16,
-                    child: Text('${index + 1}'),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _RecipeLeadImage(recipe: recipe),
+                      const SizedBox(width: AppSpacing.md),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              recipe.breadType.label,
+                              style: AppTypography.label,
+                            ),
+                            const SizedBox(height: AppSpacing.xs),
+                            Text(recipe.description, style: AppTypography.body),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  title: Text(step.name, style: AppTypography.body),
-                  subtitle: step.minutes != null
-                      ? Text('${step.minutes} min', style: AppTypography.label)
-                      : null,
-                );
-              },
+                  const SizedBox(height: AppSpacing.lg),
+                  Wrap(
+                    spacing: AppSpacing.sm,
+                    runSpacing: AppSpacing.sm,
+                    children: [
+                      Chip(
+                        label: Text(
+                          '${recipe.loafCount.label} · ${recipe.loafSize.label}',
+                        ),
+                      ),
+                      Chip(label: Text('${recipe.totalMinutes} min total')),
+                      Chip(label: Text(recipe.difficulty)),
+                      if (recipe.firstProofMinutes != null)
+                        Chip(
+                          label: Text(
+                            '1st proof ${recipe.firstProofMinutes} min',
+                          ),
+                        ),
+                      if (recipe.secondProofMinutes != null)
+                        Chip(
+                          label: Text(
+                            '2nd proof ${recipe.secondProofMinutes} min',
+                          ),
+                        ),
+                      Chip(
+                        label: Text(
+                          'Bake ${recipe.bakeMinutes} min @ ${recipe.bakeTemperatureLabel}',
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (recipe.bakeMinutes > 0) ...[
+                    const SizedBox(height: AppSpacing.lg),
+                    const Text('Oven timer', style: AppTypography.title),
+                    const SizedBox(height: AppSpacing.sm),
+                    Center(
+                      child: AnalogTimer(
+                        key: ValueKey('bake_${recipe.id}_${recipe.bakeMinutes}'),
+                        duration: Duration(minutes: recipe.bakeMinutes),
+                        label: 'Bake countdown',
+                      ),
+                    ),
+                  ],
+                  if (notes.isNotEmpty) ...[
+                    const SizedBox(height: AppSpacing.lg),
+                    const Text('Notes', style: AppTypography.title),
+                    const SizedBox(height: AppSpacing.sm),
+                    ...notes.map(
+                      (line) => Padding(
+                        padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                        child: Text(line, style: AppTypography.bodyMuted),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: AppSpacing.lg),
+                  const Text('Ingredients', style: AppTypography.title),
+                  const SizedBox(height: AppSpacing.sm),
+                  ...recipe.ingredients.map(
+                    (item) => Padding(
+                      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                      child: Text('• $item', style: AppTypography.bodyMuted),
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xl),
+                  const Text('Steps', style: AppTypography.title),
+                  const SizedBox(height: AppSpacing.sm),
+                  for (var index = 0; index < recipe.steps.length; index++)
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: _stepListLeading(
+                        recipe.steps[index].name,
+                        index + 1,
+                      ),
+                      title: Text(
+                        recipe.steps[index].name,
+                        style: AppTypography.body,
+                      ),
+                      subtitle: recipe.steps[index].minutes != null
+                          ? Text(
+                              '${recipe.steps[index].minutes} min',
+                              style: AppTypography.label,
+                            )
+                          : null,
+                    ),
+                  const SizedBox(height: AppSpacing.lg),
+                ],
+              ),
             ),
           ),
+          const SizedBox(height: AppSpacing.md),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).push(
@@ -126,7 +183,7 @@ class _RecipeLeadImage extends StatelessWidget {
     final url = recipe.imageUrl;
     if (url != null && url.isNotEmpty) {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
         child: Image.network(
           url,
           width: 88,
@@ -151,13 +208,14 @@ class _Placeholder extends StatelessWidget {
       width: 88,
       height: 88,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(16),
+        color: AppColors.surfaceMuted,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: AppColors.border),
       ),
       child: Icon(
         recipe.breadType.icon,
         size: 40,
-        color: Theme.of(context).colorScheme.primary,
+        color: AppColors.primary,
       ),
     );
   }
