@@ -130,6 +130,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     runSpacing: 8,
                     children: [
                       _InfoChip(
+                        icon: recipe.breadType.icon,
+                        label: recipe.breadType.label,
+                      ),
+                      _InfoChip(
                         icon: Icons.schedule_outlined,
                         label: '${recipe.totalMinutes} min',
                       ),

@@ -26,14 +26,22 @@ class RecipeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(recipe.title, style: AppTypography.title),
+              const SizedBox(height: AppSpacing.xs),
+              Text(recipe.breadType.label, style: AppTypography.label),
               const SizedBox(height: AppSpacing.sm),
               Text(recipe.description, style: AppTypography.bodyMuted),
               const SizedBox(height: AppSpacing.lg),
               Wrap(
                 spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
                 children: [
                   Chip(label: Text('${recipe.totalMinutes} min')),
                   Chip(label: Text(recipe.difficulty)),
+                  Chip(
+                    label: Text(
+                      '${recipe.loafCount.label} · ${recipe.loafSize.label}',
+                    ),
+                  ),
                 ],
               ),
             ],

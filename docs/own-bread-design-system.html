@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Own Bread — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Aligned with lib/app/theme/app_colors.dart */
+      --color-primary: #6FA8A1;
+      --color-primary-pressed: #5A8F88;
+      --color-primary-soft: #A5D4CC;
+      --color-coral: #D98C7A;
+      --color-coral-pressed: #C47A68;
+      --color-secondary: #7B6F9D;
+      --color-secondary-soft: #9A91B5;
+      --color-gold: #C9A96E;
+      --color-gold-soft: #D9BC88;
+
+      --page-bg: #F5F2EB;
+      --page-fg: #1A1917;
+      --card: #FFFCF7;
+      --card-muted: #FAF7F2;
+      --card-border: rgba(26, 25, 23, 0.08);
+
+      --text-secondary: #5C5A56;
+      --text-tertiary: #6D6A65;
+      --text-on-light: #3D3C39;
+      --text-body-muted: #4A4844;
+      --text-teal-deep: #3D5C55;
+
+      --accent: var(--color-primary);
+      --link-accent: var(--color-primary);
+      --cta: var(--color-coral);
+
+      --divider: #E8E4DC;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      line-height: 1.5;
+      font-size: 16px;
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 24px 20px 80px; }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 40px;
+    }
+    header.hero h1 {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+    }
+    header.hero .meta {
+      color: var(--text-secondary);
+      font-size: 14px;
+      max-width: 720px;
+    }
+    header.hero code { font-family: var(--mono); font-size: 13px; background: rgba(111, 168, 161, 0.22); padding: 2px 6px; border-radius: 4px; }
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    nav.toc a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(111, 168, 161, 0.18);
+      border: 1px solid rgba(111, 168, 161, 0.32);
+    }
+    nav.toc a:hover { background: rgba(111, 168, 161, 0.3); }
+    section { margin-bottom: 48px; }
+    section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--color-primary);
+    }
+    section p.lead { color: var(--text-body-muted); margin: 0 0 20px; max-width: 720px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(26, 25, 23, 0.06);
+    }
+    .grid-swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .swatch {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .swatch:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+    .swatch .chip { height: 72px; }
+    .swatch .lbl {
+      padding: 10px 12px;
+      background: #fff;
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+    .swatch .lbl strong { display: block; font-size: 11px; color: #666; font-weight: 600; margin-bottom: 2px; font-family: Roboto, sans-serif; }
+    .row-grad {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .grad-preview {
+      border-radius: 16px;
+      height: 120px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .grad-preview .lbl {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 10px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.65));
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .type-scale { display: flex; flex-direction: column; gap: 16px; }
+    .type-row { border-bottom: 1px solid var(--divider); padding-bottom: 12px; }
+    .type-row .name { font-size: 12px; font-weight: 600; color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
+    table.token-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    table.token-table th, table.token-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--divider); }
+    table.token-table th { font-weight: 600; color: var(--text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+    table.token-table code { font-family: var(--mono); font-size: 13px; }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--page-fg);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1), opacity 0.3s;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .principles { display: grid; gap: 12px; }
+    .principles li { margin-left: 1.2em; }
+    .journey-mock {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.12);
+      max-width: 420px;
+    }
+    .journey-mock .bar {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .journey-mock .body {
+      padding: 16px;
+      background: var(--card-muted);
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .journey-mock .steps {
+      margin: 12px 0 0;
+      padding-left: 1.2em;
+    }
+    .cmp-h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 28px 0 10px;
+      color: var(--text-on-light);
+    }
+    .cmp-h3:first-child { margin-top: 0; }
+    .cmp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 12px;
+    }
+    .cmp-frame {
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--card-muted);
+    }
+    .cmp-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-secondary);
+      margin-bottom: 12px;
+    }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .btn-sf-primary {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: none;
+      background: var(--color-coral);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(217, 140, 122, 0.35);
+    }
+    .btn-sf-primary:hover { background: var(--color-coral-pressed); }
+    .btn-sf-secondary {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--text-teal-deep);
+      border: 1px solid var(--color-primary);
+      cursor: pointer;
+    }
+    table.table-comp { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.table-comp th, table.table-comp td {
+      text-align: left;
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--divider);
+      vertical-align: top;
+    }
+    table.table-comp th {
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    table.table-comp td:first-child { font-weight: 600; color: var(--page-fg); }
+    table.table-comp code { font-family: var(--mono); font-size: 11px; word-break: break-all; }
+    .comp-search { margin-bottom: 14px; }
+    .comp-search input {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(26, 25, 23, 0.15);
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .comp-search input:focus {
+      outline: 2px solid var(--color-primary-soft);
+      outline-offset: 0;
+    }
+    .status-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(79, 125, 99, 0.18);
+      color: #2d4a38;
+      margin-left: 8px;
+    }
+    footer.note {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <h1>Own Bread Design System</h1>
+      <p class="meta">
+        <span class="status-badge">MVP tokens locked</span><br /><br />
+        Version <strong>1.0.0</strong> — Flutter source of truth:
+        <code>lib/app/theme/app_colors.dart</code>,
+        <code>app_typography.dart</code>,
+        <code>app_spacing.dart</code>,
+        <code>app_radius.dart</code>,
+        <code>app_theme.dart</code>.
+        Colors below use the same HSL ramp logic as the ServiceFlow reference page for consistency; this app reuses the warm teal–coral palette for a bakery-friendly feel.
+        The <a href="#components">screens &amp; widgets</a> section lists what exists in this repo today.
+      </p>
+      <nav class="toc" aria-label="Sections">
+        <a href="#principles">Principles</a>
+        <a href="#color">Color</a>
+        <a href="#typography">Typography</a>
+        <a href="#layout">Layout</a>
+        <a href="#radius">Radius</a>
+        <a href="#motion">Motion</a>
+        <a href="#gradients">Surfaces</a>
+        <a href="#journey">User journey</a>
+        <a href="#components">Components</a>
+      </nav>
+    </header>
+
+    <section id="principles">
+      <h2>Principles</h2>
+      <p class="lead">Decisions for Own Bread: clarity, timing, and calm guidance — not generic notes.</p>
+      <div class="card">
+        <ul class="principles">
+          <li><strong>Warm structure</strong> — Primary teal <code>#6FA8A1</code> for structure, links, and focus; coral <code>#D98C7A</code> for primary actions (Start bake, Save, Finish). Purple and gold stay as soft accents in documentation swatches; the Flutter theme centers on teal + coral.</li>
+          <li><strong>Surfaces</strong> — Page background <code>#F5F2EB</code>, cards <code>#FFFCF7</code> — flour-and-crumb warmth, not stark white.</li>
+          <li><strong>Time is content</strong> — Proof windows, bake time, and per-step minutes are first-class; UI should surface duration without clutter (chips, step subtitles).</li>
+          <li><strong>Type</strong> — Roboto via Flutter defaults; scale matches <code>AppTypography</code> (heading 28 → label 12).</li>
+          <li><strong>Spacing</strong> — <code>AppSpacing</code> uses a tight 4-based scale (4–32px) for consistent padding in forms and lists.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="color">
+      <h2>Color</h2>
+      <p class="lead">Click a swatch to copy HEX. Values match <code>AppColors</code>.</p>
+      <div class="card">
+        <h3 style="margin-top:0;font-size:16px;">Core &amp; surfaces</h3>
+        <div class="grid-swatches" id="swatches-core"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;font-size:16px;">Primary (teal) ramp</h3>
+        <div class="grid-swatches" id="swatches-primary"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;font-size:16px;">Coral (CTA)</h3>
+        <div class="grid-swatches" id="swatches-t1"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;font-size:16px;">Purple — secondary accent</h3>
+        <div class="grid-swatches" id="swatches-t2"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;font-size:16px;">Gold — soft accent</h3>
+        <div class="grid-swatches" id="swatches-t4"></div>
+      </div>
+    </section>
+
+    <section id="typography">
+      <h2>Typography</h2>
+      <p class="lead"><code>AppTypography</code> — sizes in logical px (see Flutter).</p>
+      <div class="card type-scale" id="type-scale"></div>
+    </section>
+
+    <section id="layout">
+      <h2>Layout &amp; spacing</h2>
+      <p class="lead"><code>AppSpacing</code> — 4px base unit.</p>
+      <div class="card">
+        <table class="token-table" id="table-spacing"></table>
+      </div>
+    </section>
+
+    <section id="radius">
+      <h2>Border radius</h2>
+      <div class="card">
+        <table class="token-table" id="table-radius"></table>
+      </div>
+    </section>
+
+    <section id="motion">
+      <h2>Motion</h2>
+      <p class="lead">Use Material 3 defaults; prefer short transitions for step changes.</p>
+      <div class="card">
+        <table class="token-table" id="table-motion"></table>
+      </div>
+    </section>
+
+    <section id="gradients">
+      <h2>Surfaces &amp; gradients</h2>
+      <p class="lead">Optional hero or marketing backgrounds; app shell today is flat <code>AppColors.background</code>.</p>
+      <div class="card row-grad" id="gradients-product"></div>
+    </section>
+
+    <section id="journey">
+      <h2>User journey (MVP)</h2>
+      <p class="lead">Home → Recipe detail → Baking session (timed steps) → Completion. Aligns with product narrative: confidence through sequence.</p>
+      <div class="card">
+        <div class="journey-mock">
+          <div class="bar" style="background: linear-gradient(to bottom right, #4a7a74, #6FA8A1);">Own Bread</div>
+          <div class="body">
+            <strong style="color:var(--page-fg);">Classic Sourdough</strong> · Sourdough · 240 min total<br />
+            <ol class="steps">
+              <li>Ingredients &amp; notes</li>
+              <li>Steps with optional minutes (<code>RecipeStep</code>)</li>
+              <li>Start baking session → one step per screen + timer chip</li>
+              <li>Finish → completion screen</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="components">
+      <h2>Screens &amp; widgets</h2>
+      <p class="lead">
+        Implemented in this codebase (not Figma-only). New UI should use <code>Theme.of(context)</code> and <code>AppColors</code> rather than one-off hex values.
+      </p>
+
+      <div class="card">
+        <h3 class="cmp-h3" style="margin-top:0;">Patterns (HTML preview — mirrors Flutter)</h3>
+        <div class="cmp-grid">
+          <div class="cmp-frame">
+            <div class="cmp-label">Primary actions</div>
+            <p style="font-size:13px;color:var(--text-secondary);margin:0 0 12px;">Coral filled = main CTA; teal outline = secondary (see <code>AppTheme</code>).</p>
+            <div class="btn-row">
+              <button type="button" class="btn-sf-primary">Start baking</button>
+              <button type="button" class="btn-sf-secondary">Previous step</button>
+            </div>
+          </div>
+          <div class="cmp-frame">
+            <div class="cmp-label">Forms</div>
+            <p style="font-size:13px;color:var(--text-secondary);margin:0 0 12px;"><code>CreateBreadScreen</code> uses <code>OutlineInputBorder</code> with ~14px radius; multiline fields for ingredients and steps.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="cmp-h3" style="margin-top:0;">Inventory (<code>lib/</code>)</h3>
+        <div class="comp-search">
+          <label for="comp-filter" class="visually-hidden">Filter</label>
+          <input type="search" id="comp-filter" placeholder="Filter by name or path…" autocomplete="off" />
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="table-comp">
+            <thead>
+              <tr>
+                <th>Widget / screen</th>
+                <th>Path</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody id="component-tbody">
+              <tr><td>OwnBreadApp</td><td><code>lib/app/app.dart</code></td><td>MaterialApp + <code>AppTheme.lightTheme</code>.</td></tr>
+              <tr><td>HomeScreen</td><td><code>lib/features/home/presentation/home_screen.dart</code></td><td>Recipe list, add bread FAB.</td></tr>
+              <tr><td>RecipeDetailScreen</td><td><code>lib/features/recipes/presentation/recipe_detail_screen.dart</code></td><td>Recipe metadata, ingredients, steps, start session.</td></tr>
+              <tr><td>CreateBreadScreen</td><td><code>lib/features/recipes/presentation/create_bread_screen.dart</code></td><td>Full recipe form (type, proofs, bake, steps with <code>|</code> minutes).</td></tr>
+              <tr><td>BakingSessionScreen</td><td><code>lib/features/baking_session/presentation/baking_session_screen.dart</code></td><td>Guided steps + optional step timer chip.</td></tr>
+              <tr><td>CompletionScreen</td><td><code>lib/features/baking_session/presentation/completion_screen.dart</code></td><td>End of session.</td></tr>
+              <tr><td>OwnBreadScaffold</td><td><code>lib/core/widgets/own_bread_scaffold.dart</code></td><td>Shared scaffold + app bar.</td></tr>
+              <tr><td>RecipeCard</td><td><code>lib/core/widgets/recipe_card.dart</code></td><td>Card list item pattern.</td></tr>
+              <tr><td>BreadRecipe / RecipeStep</td><td><code>lib/shared/models/bread_recipe.dart</code></td><td>Domain model + bread type enums.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer class="note">
+      Static HTML for review and README linking. Implementation truth stays in Dart under <code>lib/app/theme/</code>.
+      Derived from the ServiceFlow design-system page structure; customized for Own Bread MVP.
+    </footer>
+  </div>
+  <div class="toast" id="toast" role="status">Copied</div>
+
+  <script>
+(function () {
+  'use strict';
+
+  function hexToRgb(hex) {
+    const h = hex.replace('#', '');
+    const n = parseInt(h, 16);
+    return { r: (n >> 16) / 255, g: ((n >> 8) & 255) / 255, b: (n & 255) / 255 };
+  }
+  function rgbToHex(r, g, b) {
+    const c = (x) => Math.max(0, Math.min(255, Math.round(x * 255))).toString(16).padStart(2, '0');
+    return ('#' + c(r) + c(g) + c(b)).toUpperCase();
+  }
+  function rgbToHsl(r, g, b) {
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h = 0, s = 0;
+    const l = (max + min) / 2;
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+        case g: h = ((b - r) / d + 2) / 6; break;
+        default: h = ((r - g) / d + 4) / 6;
+      }
+    }
+    return { h: h * 360, s, l };
+  }
+  function hslToRgb(h, s, l) {
+    h = (h % 360 + 360) % 360 / 360;
+    let r, g, b;
+    if (s === 0) r = g = b = l;
+    else {
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+      };
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1 / 3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1 / 3);
+    }
+    return { r, g, b };
+  }
+  function adjustLightness(hex, delta) {
+    const { r, g, b } = hexToRgb(hex);
+    let { h, s, l } = rgbToHsl(r, g, b);
+    l = Math.max(0, Math.min(1, l + delta));
+    const rgb = hslToRgb(h, s, l);
+    return rgbToHex(rgb.r, rgb.g, rgb.b);
+  }
+  function lerpColor(hexA, hexB, t) {
+    const a = hexToRgb(hexA), b = hexToRgb(hexB);
+    return rgbToHex(
+      a.r + (b.r - a.r) * t,
+      a.g + (b.g - a.g) * t,
+      a.b + (b.b - a.b) * t
+    );
+  }
+
+  const PRIMARY = '#6FA8A1';
+  const CORAL = '#D98C7A';
+  const PURPLE = '#7B6F9D';
+  const GOLD = '#C9A96E';
+  const APP_BG = '#F5F2EB';
+  const APP_BG_DARK = '#1A1917';
+
+  function primaryRamp() {
+    const dark = [];
+    const light = [];
+    for (let i = 1; i <= 10; i++) {
+      dark.push({ name: 'primary_dark' + i, hex: adjustLightness(PRIMARY, -0.04 * i) });
+      light.push({ name: 'primary_light' + i, hex: adjustLightness(PRIMARY, 0.04 * i) });
+    }
+    return { dark, light };
+  }
+
+  function tetradicRamp(seedHex) {
+    const dark = [];
+    const light = [];
+    for (let i = 1; i <= 10; i++) {
+      dark.push(adjustLightness(seedHex, -0.04 * i));
+      light.push(adjustLightness(seedHex, 0.04 * i));
+    }
+    return { dark, light };
+  }
+
+  const t1seed = CORAL;
+  const t2seed = PURPLE;
+  const t4seed = GOLD;
+
+  const toastEl = document.getElementById('toast');
+  let toastTimer;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1600);
+  }
+
+  function swatchEl(name, hex) {
+    const div = document.createElement('div');
+    div.className = 'swatch';
+    div.innerHTML = '<div class="chip" style="background:' + hex + '"></div><div class="lbl"><strong>' + name + '</strong>' + hex + '</div>';
+    div.addEventListener('click', () => {
+      navigator.clipboard.writeText(hex).then(() => toast('Copied ' + hex));
+    });
+    return div;
+  }
+
+  function fillSwatchContainer(id, items) {
+    const el = document.getElementById(id);
+    items.forEach(({ name, hex }) => el.appendChild(swatchEl(name, hex)));
+  }
+
+  const ramp = primaryRamp();
+  fillSwatchContainer('swatches-core', [
+    { name: 'primary (teal)', hex: PRIMARY },
+    { name: 'coral (CTA)', hex: CORAL },
+    { name: 'secondary (purple)', hex: PURPLE },
+    { name: 'gold (accent)', hex: GOLD },
+    { name: 'AppColors.background', hex: APP_BG },
+    { name: 'textPrimary', hex: APP_BG_DARK },
+    { name: 'success', hex: '#4F7D63' },
+  ]);
+
+  const primarySwatches = [...ramp.dark.reverse(), { name: 'primary', hex: PRIMARY }, ...ramp.light];
+  fillSwatchContainer('swatches-primary', primarySwatches);
+
+  const t1 = tetradicRamp(t1seed);
+  const t2 = tetradicRamp(t2seed);
+  const t4 = tetradicRamp(t4seed);
+
+  function appendRamp(containerId, prefix, seed, rampObj) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = '';
+    for (let i = 10; i >= 1; i--) el.appendChild(swatchEl(prefix + '_dark' + i, rampObj.dark[i - 1]));
+    el.appendChild(swatchEl(prefix, seed));
+    for (let i = 1; i <= 10; i++) el.appendChild(swatchEl(prefix + '_light' + i, rampObj.light[i - 1]));
+  }
+  appendRamp('swatches-t1', 'tetradic_1', t1seed, t1);
+  appendRamp('swatches-t2', 'tetradic_2', t2seed, t2);
+  appendRamp('swatches-t4', 'tetradic_4', t4seed, t4);
+
+  // AppTypography — matches lib/app/theme/app_typography.dart
+  const typo = [
+    ['heading', 28, 700, 1.2],
+    ['title', 20, 700, 1.3],
+    ['body', 16, 400, 1.5],
+    ['bodyMuted', 14, 400, 1.45],
+    ['label', 12, 600, 1.25],
+  ];
+  const typeScale = document.getElementById('type-scale');
+  typo.forEach(([name, px, w, lh]) => {
+    const row = document.createElement('div');
+    row.className = 'type-row';
+    row.innerHTML = '<div class="name">' + name + ' · ' + px + 'px / w' + w + ' / lh ' + lh + '</div><div style="font-size:' + px + 'px;line-height:' + lh + ';font-weight:' + w + ';">The quick brown fox jumps over the lazy dog.</div>';
+    typeScale.appendChild(row);
+  });
+
+  const spacing = [
+    ['xs', 4], ['sm', 8], ['md', 12], ['lg', 16], ['xl', 24], ['xxl', 32],
+  ];
+  document.getElementById('table-spacing').innerHTML =
+    '<thead><tr><th>Token</th><th>Value</th></tr></thead><tbody>' +
+    spacing.map(([k, v]) => '<tr><td><code>AppSpacing.' + k + '</code></td><td>' + v + 'px</td></tr>').join('') +
+    '</tbody>';
+
+  document.getElementById('table-radius').innerHTML =
+    '<thead><tr><th>Token</th><th>Value</th></tr></thead><tbody>' +
+    [['sm', 8], ['md', 12], ['lg', 16], ['xl', 24]]
+      .map(([k, v]) => '<tr><td><code>AppRadius.' + k + '</code></td><td>' + v + 'px</td></tr>').join('') +
+    '</tbody>';
+
+  document.getElementById('table-motion').innerHTML =
+    '<thead><tr><th>Guideline</th><th>Value</th></tr></thead><tbody>' +
+    '<tr><td>Step transition</td><td>~150–300ms, easeOut</td></tr>' +
+    '<tr><td>SnackBar</td><td>Material default</td></tr></tbody>';
+
+  const p = PRIMARY;
+  const pd2 = adjustLightness(p, -0.08);
+  const pl2 = adjustLightness(p, 0.08);
+  const appBarG = 'linear-gradient(to bottom right, ' + pl2 + ', ' + pd2 + ')';
+  const warmHero = 'linear-gradient(135deg, ' + lerpColor(APP_BG, CORAL, 0.12) + ' 0%, ' + APP_BG + ' 50%, ' + lerpColor(APP_BG, PRIMARY, 0.08) + ' 100%)';
+
+  const gp = document.getElementById('gradients-product');
+  [
+    ['App bar (example)', appBarG],
+    ['Marketing / hero (optional)', warmHero],
+  ].forEach(([label, grad]) => {
+    const d = document.createElement('div');
+    d.className = 'grad-preview';
+    d.style.background = grad;
+    d.innerHTML = '<div class="lbl">' + label + '</div>';
+    gp.appendChild(d);
+  });
+
+  const compFilter = document.getElementById('comp-filter');
+  const compTbody = document.getElementById('component-tbody');
+  if (compFilter && compTbody) {
+    compFilter.addEventListener('input', function () {
+      const q = this.value.toLowerCase().trim();
+      compTbody.querySelectorAll('tr').forEach(function (tr) {
+        tr.style.display = !q || tr.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+  }
+})();
+  </script>
+</body>
+</html>

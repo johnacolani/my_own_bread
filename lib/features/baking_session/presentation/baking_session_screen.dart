@@ -33,14 +33,22 @@ class _BakingSessionScreenState extends State<BakingSessionScreen> {
             style: AppTypography.label,
           ),
           const SizedBox(height: AppSpacing.sm),
-          Text(step, style: AppTypography.heading),
+          Text(step.name, style: AppTypography.heading),
+          if (step.minutes != null) ...[
+            const SizedBox(height: AppSpacing.md),
+            Chip(
+              avatar: const Icon(Icons.timer_outlined, size: 18),
+              label: Text('${step.minutes} min'),
+            ),
+          ],
           const Spacer(),
           ElevatedButton(
             onPressed: () {
               if (isLast) {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute<void>(
-                    builder: (_) => CompletionScreen(recipeName: widget.recipe.title),
+                    builder: (_) =>
+                        CompletionScreen(recipeName: widget.recipe.title),
                   ),
                 );
               } else {
