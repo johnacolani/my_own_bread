@@ -16,7 +16,18 @@ Home → Recipe detail → Start baking → Guided steps → Complete session
 
 **Implemented in code:** theme tokens live under [`lib/app/theme/`](lib/app/theme/) (`AppColors`, `AppTypography`, `AppSpacing`, `AppRadius`, `AppTheme`).
 
-**Static reference (for reviewers / portfolio):** open [`docs/own-bread-design-system.html`](docs/own-bread-design-system.html) in your browser (double-click the file, or from the repo root run `start docs/own-bread-design-system.html` on Windows). It documents the same palette and typography with copyable HEX swatches.
+### View the HTML reference
+
+| Where | Link |
+|--------|------|
+| **This repo on GitHub** | [Open `docs/own-bread-design-system.html`](docs/own-bread-design-system.html) — opens the file in GitHub (use **Raw** or clone locally for full interactivity). |
+| **Live page (recommended)** | After you enable **GitHub Pages** (Settings → Pages → Branch `main` / folder `/docs`), use:<br>`https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/own-bread-design-system.html`<br>or the short root URL (redirects to the same page):<br>`https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/` |
+
+Replace `YOUR_USERNAME` and `YOUR_REPO_NAME` with your GitHub user/org and repository name.
+
+**Local:** double-click `docs/own-bread-design-system.html`, or from the repo root: `start docs\own-bread-design-system.html` (Windows).
+
+The page documents the palette and typography with copyable HEX swatches (works best via GitHub Pages or opening the file locally).
 
 ### How to show “design system complete” in this README
 
